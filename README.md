@@ -19,3 +19,35 @@ Use all the things!
     [#347506] Flytning til nye navneservere godkendt
     [#347503] Anmodning om flytning til nye navneservere
     [#368359] attach test
+
+-
+
+    ~/r/e/zd-cli (master=)% bundle exec ./zd-view-ticket.rb 368359
+    Showing: [#368359] attach test
+    ### Update by 672059861 -- 2017-04-06 08:50:57 UTC -- Public? true ###
+    hejhej
+
+
+    Venlig hilsen, Best regards, Freundliche Grüße
+
+    Niels Kristensen
+
+    PIL.dk | www.pil.dk
+
+    ########
+    ### Update by 672059861 -- 2017-04-06 08:53:16 UTC -- Public? true ###
+    hejhej
+
+
+    Venlig hilsen, Best regards, Freundliche Grüße
+
+    Niels Kristensen
+
+    PIL.dk | www.pil.dk
+
+    ########
+    ### Update by 672059861 -- 2017-04-06 08:59:47 UTC -- Public? true ###
+    hfgh
+    ...
+    ...
+    ...
