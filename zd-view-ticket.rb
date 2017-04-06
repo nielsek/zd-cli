@@ -17,7 +17,7 @@ end
 users = Hash.new
 
 ticket = ZendeskAPI::Ticket.find(client, :id => ARGV[0])
-puts "Showing: [##{ticket.id}] #{ticket.subject}"
+puts "Showing: [##{ticket.id}] #{ticket.subject} | Status: #{ticket.status}"
 ticket.comments.each do |comment|
   unless users.has_key?(comment.author_id)
     users[comment.author_id] = client.users.find!(:id => comment.author_id)
