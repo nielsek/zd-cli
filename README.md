@@ -64,3 +64,8 @@ Use all the things!
 
     ./zd-update-ticket-assignee.rb 368359 nk@pil.dk
     true
+
+-
+
+    bundle exec ./zd-add-ticket-comment.rb 368359 flaf hest
+    true
