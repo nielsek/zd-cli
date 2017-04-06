@@ -14,10 +14,21 @@ client = ZendeskAPI::Client.new do |config|
   config.retry = true
 end
 
+users = Hash.new
+
 ticket = ZendeskAPI::Ticket.find(client, :id => ARGV[0])
 puts "Showing: [##{ticket.id}] #{ticket.subject}"
 ticket.comments.each do |comment|
-  puts "### Update by #{comment.author_id} -- #{comment.created_at} -- Public? #{comment.public} ###"
+  unless users.has_key?(comment.author_id)
+    users[comment.author_id] = client.users.find!(:id => comment.author_id)
+  end
+  if comment.public == true
+    visibility='Public'
+  else
+    visibility='Internal'
+  end
+  puts
+  puts "### #{visibility} update by #{users[comment.author_id].name}|#{users[comment.author_id].email} -- #{comment.created_at} ###"
   puts comment.plain_body
   puts
   puts "########"

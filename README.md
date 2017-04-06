@@ -24,7 +24,8 @@ Use all the things!
 
     ~/r/e/zd-cli (master=)% bundle exec ./zd-view-ticket.rb 368359
     Showing: [#368359] attach test
-    ### Update by 672059861 -- 2017-04-06 08:50:57 UTC -- Public? true ###
+
+    ### Public update by Niels Kristensen|nk@pil.dk -- 2017-04-06 08:50:57 UTC ###
     hejhej
 
 
@@ -35,7 +36,8 @@ Use all the things!
     PIL.dk | www.pil.dk
 
     ########
-    ### Update by 672059861 -- 2017-04-06 08:53:16 UTC -- Public? true ###
+
+    ### Public update by Niels Kristensen|nk@pil.dk -- 2017-04-06 08:53:16 UTC ###
     hejhej
 
 
@@ -46,7 +48,8 @@ Use all the things!
     PIL.dk | www.pil.dk
 
     ########
-    ### Update by 672059861 -- 2017-04-06 08:59:47 UTC -- Public? true ###
+
+    ### Public update by Niels Kristensen|nk@pil.dk -- 2017-04-06 08:59:47 UTC ###
     hfgh
     ...
     ...
