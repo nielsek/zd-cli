@@ -1,14 +1,14 @@
-* Run `bundle install`
+Run `bundle install`
 
-* Put content in `config.rb`:
+Put content in `config.rb`:
 
     ENV['zd_url']='pil.zendesk.com'
     ENV['zd_user']='nk@pil.dk'
     ENV['zd_token']='FL4Fh3st'
 
-* Use all the things!
+Use all the things!
 
-    ./zd-search.rb flaf
+    % ./zd-search.rb flaf
     [#362453] test
     [#349738] flaf.dk suspenderet/suspended
     [#347508] REDEL flaf.dk 2/2
