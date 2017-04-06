@@ -15,5 +15,5 @@ client = ZendeskAPI::Client.new do |config|
 end
 
 ticket = ZendeskAPI::Ticket.find(client, :id => ARGV[0])
-ticket.status = ARGV[1]
+ticket.assignee_id = client.users.search(:query => ARGV[1])[0].id
 puts ticket.save!

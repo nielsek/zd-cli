@@ -57,6 +57,10 @@ Use all the things!
 
 -
 
-    ~/r/e/zd-cli (master *=)% bundle exec ./zd-update-ticket.rb 368359 solved
+    ~/r/e/zd-cli (master *=)% bundle exec ./zd-update-ticket-status.rb 368359 solved
     true
 
+-
+
+    ./zd-update-ticket-assignee.rb 368359 nk@pil.dk
+    true
