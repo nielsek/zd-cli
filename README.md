@@ -54,3 +54,9 @@ Use all the things!
     ...
     ...
     ...
+
+-
+
+    ~/r/e/zd-cli (master *=)% bundle exec ./zd-update-ticket.rb 368359 solved
+    true
+
