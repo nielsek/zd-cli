@@ -23,7 +23,7 @@ Use all the things!
 -
 
     ~/r/e/zd-cli (master=)% bundle exec ./zd-view-ticket.rb 368359
-    Showing: [#368359] attach test
+    Showing: [#368359] attach test | Status: solved | Assigned to Niels Kristensen
 
     ### Public update by Niels Kristensen|nk@pil.dk -- 2017-04-06 08:50:57 UTC ###
     hejhej
