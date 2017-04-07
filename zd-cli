@@ -1,0 +1,22 @@
+#!/bin/sh
+
+while true ; do
+  clear
+  main=`peco --selection-prefix='*' ./peco/main | sed 's/ /-/g' | awk '{print tolower($0)}'`
+
+  submenu=`column -ts '\t' ./peco/sub | peco --selection-prefix='*'`
+
+  echo > /tmp/zd-ticket-343865.tmp
+  echo >> /tmp/zd-ticket-343865.tmp
+  echo '### Reply above this line ###' >> /tmp/zd-ticket-343865.tmp
+  echo >> /tmp/zd-ticket-343865.tmp
+  echo "`bundle exec ./scripts/zd-view-ticket.rb 368359`" >> /tmp/zd-ticket-343865.tmp
+
+  vi /tmp/zd-ticket-343865.tmp
+
+  clear
+  echo
+  echo "Ticket updated"
+  sleep 1
+
+done

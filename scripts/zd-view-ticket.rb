@@ -34,4 +34,3 @@ ticket.comments.each do |comment|
   puts
   puts "########"
 end
-puts ticket
