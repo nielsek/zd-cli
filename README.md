@@ -11,3 +11,4 @@ Put content in `config.rb`:
 
 Demo - 100% hardcoded as of now:
 
+![demo](images/zd-cli-demo.gif)
