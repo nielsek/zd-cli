@@ -26,6 +26,5 @@ Put content in `config.rb`:
 
 ### TODO
 
-* Caching
 * Ticket reassignment
 * Attachments
