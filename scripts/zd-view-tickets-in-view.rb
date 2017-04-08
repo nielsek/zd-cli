@@ -14,6 +14,11 @@ client = ZendeskAPI::Client.new do |config|
   config.retry = true
 end
 
-client.search(:query => "#{ARGV.join(' ')}").each do |result|
-  puts "#{result.id} #{result.subject}"
+users = Hash.new
+
+client.views.find(id: ARGV[0]).tickets.each do |ticket|
+  unless users.has_key?(ticket.requester_id)
+    users[ticket.requester_id] = client.users.find!(:id => ticket.requester_id)
+  end
+  puts "#{ticket.id} #{'%-50.50s' % ticket.subject} #{'%-10.10s' % users[ticket.requester_id].email} #{ticket.updated_at}"
 end

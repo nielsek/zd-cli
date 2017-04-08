@@ -1,22 +1,67 @@
 #!/bin/sh
 
+views="`bundle exec ./scripts/zd-view-views.rb`"
+
+ticket() {
+  echo > /tmp/zd-ticket-$1.tmp
+  echo >> /tmp/zd-ticket-$1.tmp
+  echo '### Reply above this line ###' >> /tmp/zd-ticket-$1.tmp
+  echo >> /tmp/zd-ticket-$1.tmp
+  echo "`bundle exec ./scripts/zd-view-ticket.rb $1`" >> /tmp/zd-ticket-$1.tmp
+
+  vi /tmp/zd-ticket-$1.tmp
+
+  separator=`grep -n '^### Reply above this line ###$' /tmp/zd-ticket-$1.tmp`
+  if [ $? = 0 ]; then
+    linenr=`echo $separator | awk -F':' '{print $1}'`
+    reply=`head -n$linenr /tmp/zd-ticket-$1.tmp | grep -v '^### Reply above this line ###$\|^$'`
+    if [ -z "$reply" ]; then
+      clear
+      echo
+      echo "Empty reply - ticket not updated"
+    else
+      echo "$reply" | bundle exec ./scripts/zd-add-ticket-comment.rb $1
+      clear
+      echo
+      echo "Ticket updated"
+    fi
+    echo
+    echo "Now choose a status"
+    sleep 1
+    status=`echo -n 'pending\nsolved\nopen' | peco --selection-prefix='*'`
+    bundle exec ./scripts/zd-update-ticket-status.rb $1 $status
+  else
+    clear
+    echo
+    echo "Malformed input - ticket not updated"
+    mv /tmp/zd-ticket-$1.tmp /tmp/zd-ticket-$1.malformed
+    echo "Content can be found in /tmp/zd-ticket-$1.malformed"
+  fi
+  sleep 1
+}
+
 while true ; do
   clear
-  main=`peco --selection-prefix='*' ./peco/main | sed 's/ /-/g' | awk '{print tolower($0)}'`
+  main=`echo -n "Search\nExit zd-cli\n$views" | peco --selection-prefix='*' | awk '{print $1}'`
 
-  submenu=`column -ts '\t' ./peco/sub | peco --selection-prefix='*'`
+  if [ $main = 'Exit' ]; then
+    exit
+  elif [ $main = 'Search' ]; then
+    clear
+    echo
+    printf 'Search for: '
+    read query
+    clear
+    result=`bundle exec ./scripts/zd-search.rb $query | peco --selection-prefix='*' | awk '{print $1}'`
+    ticket $result
+  else
+    tickets=`bundle exec ./scripts/zd-view-tickets-in-view.rb $main`
+    submenu=`echo -n "Back\n$tickets" | peco --selection-prefix='*' | awk '{print $1}'`
 
-  echo > /tmp/zd-ticket-343865.tmp
-  echo >> /tmp/zd-ticket-343865.tmp
-  echo '### Reply above this line ###' >> /tmp/zd-ticket-343865.tmp
-  echo >> /tmp/zd-ticket-343865.tmp
-  echo "`bundle exec ./scripts/zd-view-ticket.rb 368359`" >> /tmp/zd-ticket-343865.tmp
-
-  vi /tmp/zd-ticket-343865.tmp
-
-  clear
-  echo
-  echo "Ticket updated"
-  sleep 1
-
+    if [ $submenu = 'Back' ]; then
+      continue
+    else
+      ticket $submenu
+    fi
+  fi
 done

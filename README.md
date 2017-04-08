@@ -2,6 +2,7 @@ Requirements:
 
 * Ruby - do `bundle install`
 * Peco - https://github.com/peco/peco/releases
+* A Zendesk token - https://pil.zendesk.com/agent/admin/api/settings/tokens
 
 Put content in `config.rb`:
 
@@ -9,6 +10,6 @@ Put content in `config.rb`:
     ENV['zd_user']='nk@pil.dk'
     ENV['zd_token']='FL4Fh3st'
 
-Demo - 100% hardcoded as of now:
+Demo:
 
 ![demo](images/zd-cli-demo.webm)

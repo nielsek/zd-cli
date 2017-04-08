@@ -14,6 +14,8 @@ client = ZendeskAPI::Client.new do |config|
   config.retry = true
 end
 
-client.search(:query => "#{ARGV.join(' ')}").each do |result|
-  puts "#{result.id} #{result.subject}"
+client.views.all do |view|
+  if view.active == true
+    puts "#{view.id} #{view.title}"
+  end
 end

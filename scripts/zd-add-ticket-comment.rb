@@ -16,5 +16,5 @@ end
 
 ticket = ZendeskAPI::Ticket.find(client, :id => ARGV[0])
 ARGV.shift
-ticket.update(comment: {public: true, body: ARGV.join(' ') })
+ticket.update(comment: {public: true, body: ARGF.read })
 puts ticket.save!
