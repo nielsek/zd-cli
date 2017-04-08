@@ -15,10 +15,18 @@ client = ZendeskAPI::Client.new do |config|
 end
 
 users = Hash.new
+if File.file?('/tmp/zd-cache-users')
+  users = File.open("/tmp/zd-cache-users", "rb") {|f| Marshal.load(f)}
+end
 
 client.views.find(id: ARGV[0]).tickets.each do |ticket|
   unless users.has_key?(ticket.requester_id)
-    users[ticket.requester_id] = client.users.find!(:id => ticket.requester_id)
+    user = client.users.find!(:id => ticket.requester_id)
+    users[ticket.requester_id] = Hash.new
+    users[ticket.requester_id]['name'] = user.name
+    users[ticket.requester_id]['email'] = user.email
   end
-  puts "#{ticket.id} #{'%-50.50s' % ticket.subject} #{'%-10.10s' % users[ticket.requester_id].email} #{ticket.updated_at}"
+  puts "#{ticket.id} #{'%-50.50s' % ticket.subject} #{'%-10.10s' % users[ticket.requester_id]['email']} #{ticket.updated_at}"
 end
+
+File.open("/tmp/zd-cache-users", "wb") {|f| Marshal.dump(users, f)}
