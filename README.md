@@ -1,6 +1,6 @@
 ### Demo
 
-![demo](images/zd-cli-demo.webm)
+![](images/zd-cli-demo.webm)
 
 ### Features
 
