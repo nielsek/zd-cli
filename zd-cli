@@ -26,18 +26,19 @@ ticket() {
       echo "Ticket updated"
     fi
     echo
-    echo "Now choose a status"
-    sleep 1
-    status=`echo -n 'pending\nsolved\nopen' | peco --selection-prefix='*'`
-    bundle exec ./scripts/zd-update-ticket-status.rb $1 $status
+    status=`echo -n 'current\npending\nsolved\nopen' | peco --prompt='Ticket status:' --selection-prefix='*'`
+    if [ "$status" != 'current' ]; then
+      bundle exec ./scripts/zd-update-ticket-status.rb $1 $status
+    fi
   else
     clear
     echo
     echo "Malformed input - ticket not updated"
     mv /tmp/zd-ticket-$1.tmp /tmp/zd-ticket-$1.malformed
     echo "Content can be found in /tmp/zd-ticket-$1.malformed"
+    sleep 0.5
   fi
-  sleep 1
+  sleep 0.5
 }
 
 while true ; do
