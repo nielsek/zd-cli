@@ -20,11 +20,17 @@ if File.file?('/tmp/zd-cache-users')
 end
 
 ticket = ZendeskAPI::Ticket.find(client, :id => ARGV[0])
-unless users.has_key?(ticket.assignee_id)
-  user = client.users.find!(:id => ticket.assignee_id)
+unless ticket.assignee_id.nil?
+  unless users.has_key?(ticket.assignee_id)
+    user = client.users.find!(:id => ticket.assignee_id)
+    users[ticket.assignee_id] = Hash.new
+    users[ticket.assignee_id]['name'] = user.name
+    users[ticket.assignee_id]['email'] = user.email
+  end
+else
   users[ticket.assignee_id] = Hash.new
-  users[ticket.assignee_id]['name'] = user.name
-  users[ticket.assignee_id]['email'] = user.email
+    users[ticket.assignee_id]['name'] = 'no one'
+    users[ticket.assignee_id]['email'] = ''
 end
 puts "Showing: [##{ticket.id}] #{ticket.subject} | Status: #{ticket.status} | Assigned to #{users[ticket.assignee_id]['name']}"
 ticket.comments.each do |comment|
