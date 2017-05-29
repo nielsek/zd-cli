@@ -27,7 +27,7 @@ ticket() {
     fi
     echo
     status=`echo -n 'current\npending\nsolved\nopen' | peco --prompt='Ticket status:' --selection-prefix='*'`
-    if [ "$status" != 'current' ]; then
+    if [ "$status" = 'pending' ] || [ "$status" = 'solved' ] || [ "$status" = 'open' ]; then
       bundle exec ./scripts/zd-update-ticket-status.rb $1 $status
     fi
   else
@@ -55,8 +55,9 @@ while true ; do
     clear
     result=`bundle exec ./scripts/zd-search.rb $query | peco --selection-prefix='*' | awk '{print $1}'`
     ticket $result
-  else
+  elif echo "$views" | grep -q "^$main "; then
     while true; do
+      clear
       tickets=`bundle exec ./scripts/zd-view-tickets-in-view.rb $main`
       submenu=`echo -n "Refresh\nBack\n$tickets" | peco --selection-prefix='*' | awk '{print $1}'`
 
@@ -64,7 +65,7 @@ while true ; do
         continue
       elif [ $submenu = 'Back' ]; then
         break
-      else
+      elif echo "$tickets" | grep -q "^$submenu "; then
         ticket $submenu
       fi
     done
