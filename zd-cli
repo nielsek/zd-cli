@@ -56,13 +56,17 @@ while true ; do
     result=`bundle exec ./scripts/zd-search.rb $query | peco --selection-prefix='*' | awk '{print $1}'`
     ticket $result
   else
-    tickets=`bundle exec ./scripts/zd-view-tickets-in-view.rb $main`
-    submenu=`echo -n "Back\n$tickets" | peco --selection-prefix='*' | awk '{print $1}'`
+    while true; do
+      tickets=`bundle exec ./scripts/zd-view-tickets-in-view.rb $main`
+      submenu=`echo -n "Refresh\nBack\n$tickets" | peco --selection-prefix='*' | awk '{print $1}'`
 
-    if [ $submenu = 'Back' ]; then
-      continue
-    else
-      ticket $submenu
-    fi
+      if [ $submenu = 'Refresh' ]; then
+        continue
+      elif [ $submenu = 'Back' ]; then
+        break
+      else
+        ticket $submenu
+      fi
+    done
   fi
 done
