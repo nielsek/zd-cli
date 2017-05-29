@@ -53,8 +53,13 @@ while true ; do
     printf 'Search for: '
     read query
     clear
-    result=`bundle exec ./scripts/zd-search.rb $query | peco --selection-prefix='*' | awk '{print $1}'`
-    ticket $result
+    results=`bundle exec ./scripts/zd-search.rb $query`
+    pick=`echo -n "Back\n$results" | peco --selection-prefix='*' | awk '{print $1}'`
+    if [ $pick = 'Back' ]; then
+      continue
+    elif echo "$results" | grep -q "^$pick "; then
+      ticket $pick
+    fi
   elif echo "$views" | grep -q "^$main "; then
     while true; do
       clear
